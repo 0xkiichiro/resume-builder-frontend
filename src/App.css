@@ -1,9 +1,51 @@
 .App {
   font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 50px;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-form {
-  margin-top: 20px;
+.scrape-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+input[type='text'] {
+  width: 100%;
+  padding: 12px 10px; /* Increase padding for height */
+  border: 2px solid #ccc; /* Make border thicker */
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+  line-height: 1.5; /* Adjust line height for better text visibility */
+  display: block; /* Make sure input is block-level */
+  margin-top: 5px; /* Add margin to separate from label */
+  width: 100%;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+button {
+  padding: 12px 20px; /* Make button height consistent with input */
+  font-size: 16px;
+  border: 2px solid #007bff; /* Add a border to the button */
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #0056b3;
 }

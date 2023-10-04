@@ -1,32 +1,30 @@
 import { useState } from 'react';
+import PersonDataForm from './PersonDataForm';
+import ScrapeForm from './ScrapeForm';
 import './App.css';
 
 function App() {
   const [handle, setHandle] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [personData, setPersonData] = useState(null); // New state to store scraped data
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleScrapeData = async (inputHandle) => {
+    setHandle(inputHandle);
+    const scrapeResponse = await fetch(`/scrape/${inputHandle}`);
+    const data = await scrapeResponse.json();
+    setPersonData(data);
+    return data;
+  };
 
-    setIsLoading(true);
-
+  const handleGeneratePDF = async (editedData) => {
     try {
-      // First, scrape the data
-      const scrapeResponse = await fetch(`/scrape/${handle}`);
-      const personData = await scrapeResponse.json();
-      console.log('Scrape response:', scrapeResponse);
-      console.log('Person data:', personData);
-
-      // Then, send the data to generate the PDF
       const pdfResponse = await fetch(`/generate/${handle}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(personData),
+        body: JSON.stringify(editedData), // Use the possibly edited data
       });
 
-      // Assuming the Flask API sends the PDF as a blob
       const blob = await pdfResponse.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -37,27 +35,20 @@ function App() {
       a.remove();
     } catch (error) {
       console.error('Failed to generate PDF:', error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
     <div className="App">
-      <h2>Enter LinkedIn Handle</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          LinkedIn Handle:
-          <input
-            value={handle}
-            onChange={(e) => setHandle(e.target.value)}
-            disabled={isLoading}
-          />
-        </label>
-        <button type="submit" disabled={isLoading}>
-          Generate PDF
-        </button>
-      </form>
+      <h1>Linkedin to CV Generator</h1>
+      {<ScrapeForm onScrape={handleScrapeData} />}
+      {personData && (
+        <PersonDataForm
+          initialData={personData}
+          onGeneratePDF={handleGeneratePDF}
+          handle={handle}
+        />
+      )}
     </div>
   );
 }
