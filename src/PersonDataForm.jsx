@@ -30,7 +30,7 @@ const PersonDataForm = ({ initialData, onGeneratePDF }) => {
 
     // If all forms are completed, call onGeneratePDF
     if (currentStep === 6) {
-      // assuming you have 5 data-groups
+      // assuming you have 6 data-groups
       onGeneratePDF(data);
     }
   };
