@@ -31,7 +31,7 @@ label {
 }
 
 button {
-  padding: 12px 20px; /* Make button height consistent with input */
+  padding: 0.5rem; /* Make button height consistent with input */
   font-size: 16px;
   border: 2px solid #007bff; /* Add a border to the button */
   border-radius: 4px;

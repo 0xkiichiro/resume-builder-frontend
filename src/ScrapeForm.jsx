@@ -18,18 +18,34 @@ function ScrapeForm({ onScrape }) {
   };
 
   return (
-    <form onSubmit={handleScrape} className="scrape-form">
-      <label>
-        LinkedIn Handle:
+    <form
+      onSubmit={handleScrape}
+      className="scrape-form"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+      }}
+    >
+      <label>LinkedIn Handle:</label>
+      <div
+        style={{
+          width: '100%',
+          height: '3rem',
+          display: 'flex',
+          justifyContent: 'space-around',
+        }}
+      >
         <input
           value={handle}
           onChange={(e) => setHandle(e.target.value)}
           disabled={isLoading}
+          style={{ width: '80%' }}
         />
-      </label>
-      <button type="submit" disabled={isLoading}>
-        Scrape Data
-      </button>
+        <button type="submit" disabled={isLoading}>
+          Scrape Data
+        </button>
+      </div>
     </form>
   );
 }
